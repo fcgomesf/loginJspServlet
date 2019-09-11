@@ -1,6 +1,8 @@
 package br.ucsal;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,15 +22,19 @@ public class ServDeixa extends HttpServlet {
 		
 		String login = request.getParameter("login");
 		String senha = request.getParameter("senha");
-		String resposta;
+		
 		if(login.equals(senha)){
-			 resposta = "Login realizado com sucesso!";
-			 }else{
-			 resposta = "Falha ao tentar fazer login. Tente novamente!";	 
+			
+			RequestDispatcher dispatch = request.getRequestDispatcher("verificador.jsp");
+			dispatch.forward(request, response);
+			
+		}else{
+			response.sendRedirect("index.html?erro=Acesso Negado");
+			
 			 }
 				
 		response.getWriter().append("<html> <body>");
-		response.getWriter().append(resposta);
+
 		response.getWriter().append("</body></html>");
 		
 		
